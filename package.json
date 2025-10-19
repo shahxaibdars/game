@@ -1,0 +1,27 @@
+{
+  "name": "memorix-game",
+  "version": "1.0.0",
+  "description": "**Memorix** is a **Simon-style Web3 memory game** that supports infinite levels, a daily challenge, telemetry for anti-cheat research, and **on-chain reward recording**.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@nomiclabs/hardhat-ethers": "^2.2.3",
+    "ethers": "^5.7.2",
+    "hardhat": "^2.22.1"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "express": "^4.21.2",
+    "node-cron": "^4.2.1"
+  },
+  "directories": {
+    "test": "test"
+  }
+}
