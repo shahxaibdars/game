@@ -73,15 +73,36 @@ const TelemetryTracker = {
         this.sequenceStartTs = Date.now();
     },
 
-    recordClick(index, gridElement) {
+    getClickType(event) {
+        if (!event) return 'unknown';
+        if (event.pointerType) {
+            if (event.pointerType === 'mouse') {
+                if (event.button === 0) return 'mouse_left';
+                if (event.button === 1) return 'mouse_middle';
+                if (event.button === 2) return 'mouse_right';
+            }
+            return event.pointerType; // e.g. "touch" or "pen"
+        }
+        if (event.type.includes('touch')) return 'touch';
+        if (event.isTrusted === false) return 'synthetic';
+        return 'unknown';
+    },
+
+
+    recordClick(index, gridElement, event) {
         if (!this.isTracking) return;
 
         const rect = gridElement.getBoundingClientRect();
+
         const clickData = {
-            index: index,
+            index,
             clientTs: Date.now(),
-            xPx: rect.left + rect.width / 2,  // Center of the clicked cell
-            yPx: rect.top + rect.height / 2
+            xPx: rect.left + rect.width / 2,
+            yPx: rect.top + rect.height / 2,
+            clickType: this.getClickType(event),
+            isTrusted: event.isTrusted,
+            eventType: event.type,
+            button: event.button
         };
 
         this.clicks.push(clickData);
