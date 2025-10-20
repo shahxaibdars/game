@@ -11,7 +11,7 @@ app.use(cors());
 app.use(express.json());
 
 // Initialize telemetry logger
-const telemetryLogger = new TelemetryLogger();
+const telemetryLogger = new TelemetryLogger({ datasetDir: './data', saveRawEvents: true });
 console.log('📊 Telemetry logger initialized');
 
 // Load configuration
