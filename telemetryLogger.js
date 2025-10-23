@@ -213,8 +213,6 @@ class TelemetryLogger {
       // - if pointerType present (pointerType / type) use that
       // - fallback to 'unknown'
 
-      //console.log(click.clickType);
-
       if (click.clickType && typeof click.clickType === 'string') {
         click.clickType = click.clickType;
       } else if (click.pointerType && typeof click.pointerType === 'string') {
@@ -224,8 +222,7 @@ class TelemetryLogger {
       } else if (click.isTrusted === false) {
         click.clickType = 'synthetic';
       } else {
-        //click.clickType = 'unknown';
-        click.clickType = 'mouse';
+        click.clickType = 'unknown';
       }
 
       // Reaction time baseline: previous click or telemetry.turnStartTs
@@ -294,8 +291,7 @@ class TelemetryLogger {
       firstClickReactionTime: clicks.length ? clicks[1].reactionTime : 0,
       clickHesitationCount: reactionTimes.reduce((s,rt)=> s + (rt > 500 ? 1 : 0), 0),
       speedToAccuracyRatio: 0, // optionally compute
-      //dominantClickType: dominant
-      dominantClickType: "mouse"
+      dominantClickType: dominant
     };
   }
 

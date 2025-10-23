@@ -3,7 +3,7 @@
   "ownerAddress": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
   "network": "localhost",
   "chainId": 31337,
-  "deployedAt": "2025-10-23T19:49:42.029Z",
+  "deployedAt": "2025-10-23T21:07:46.750Z",
   "balance": "100.0",
   "config": {
     "dailyReward": "0.01",
