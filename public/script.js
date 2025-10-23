@@ -258,7 +258,7 @@ function createGrid(size) {
         const cell = document.createElement('div');
         cell.className = 'cell';
         cell.dataset.index = i;
-        cell.addEventListener('click', () => handleCellClick(i));
+        cell.addEventListener('click', (e) => handleCellClick(i, e));
         elements.grid.appendChild(cell);
     }
 }
@@ -307,7 +307,7 @@ function stopTimer() {
     elements.timerValue.textContent = '--';
 }
 
-function handleCellClick(index) {
+function handleCellClick(index, event) {
     if (!gameState.isPlaying || gameState.isWatching) return;
 
     const cell = elements.grid.querySelectorAll('.cell')[index];
@@ -320,7 +320,7 @@ function handleCellClick(index) {
 
     // Record click with telemetry tracker
     if (window.TelemetryTracker) {
-        window.TelemetryTracker.recordClick(index, cell);
+        window.TelemetryTracker.recordClick(index, cell, event);
     }
 
     gameState.telemetry.clicks.push({
