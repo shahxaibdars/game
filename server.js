@@ -828,14 +828,82 @@ app.post('/api/admin/trigger-payout', async (req, res) => {
 app.get('/', (req, res) => res.send('Memorix Backend Server is running'));
 
 const PORT = config.server.port || 3001;
-app.listen(PORT, () => {
+// app.listen(PORT, () => {
+//   console.log(`\n🎮 Memorix Backend Server running on port ${PORT}`);
+//   console.log(`📍 Contract Address: ${contractAddress}`);
+//   console.log(`🌐 Network: ${config.blockchain.network}`);
+//   console.log(`⏰ Leaderboard resets daily at ${config.leaderboard.updateSchedule.dailyResetTime} UTC`);
+//   console.log(`\n✅ Server ready!\n`);
+  
+//   // Startup diagnostics
+//   (async () => {
+//     try {
+//       console.log('🔎 Running startup blockchain diagnostics...');
+//       if (!contract) {
+//         console.warn('⚠️ Contract instance not available (ABI load failed or incorrect path).');
+//       } else {
+//         try {
+//           const ownerOnChain = await contract.owner();
+//           console.log(`   Contract owner on-chain: ${ownerOnChain}`);
+//         } catch (err) {
+//           console.warn('   Could not read contract.owner():', err.message);
+//         }
+//       }
+
+//       if (!ownerWallet) {
+//         console.warn('⚠️ ownerWallet not available — signer not created.');
+//       } else {
+//         console.log(`   Owner wallet address (local signer): ${ownerWallet.address}`);
+//       }
+
+//       if (contract && ownerWallet) {
+//         try {
+//           const ownerOnChain = await contract.owner();
+//           if (ownerOnChain.toLowerCase() !== ownerWallet.address.toLowerCase()) {
+//             console.warn('❗ Signer address DOES NOT MATCH contract owner — on-chain onlyOwner calls will revert.');
+//             console.warn(`   on-chain owner: ${ownerOnChain} | signer: ${ownerWallet.address}`);
+//           } else {
+//             console.log('   Signer matches contract owner — on-chain admin calls should be authorized.');
+//           }
+//         } catch (err) {
+//           // ignore
+//         }
+//       }
+
+//       try {
+//         const bal = await provider.getBalance(contractAddress);
+//         console.log(`   Contract ETH balance: ${ethers.utils.formatEther(bal)} ETH`);
+//       } catch (err) {
+//         console.warn('   Could not fetch contract balance:', err.message);
+//       }
+
+//       try {
+//         if (contract) {
+//           const pool = await contract.leaderboardTotalPool();
+//           console.log(`   Contract leaderboardTotalPool (on-chain): ${ethers.utils.formatEther(pool)} ETH`);
+//         }
+//       } catch (err) {
+//         // not critical
+//       }
+
+//     } catch (err) {
+//       console.warn('Startup diagnostics failed:', err.message);
+//     }
+
+//     // Start the payout schedule after diagnostics
+//     scheduleLeaderboardPayout();
+//   })();
+// });
+
+// Global error handlers for better debugging
+app.listen(PORT, '0.0.0.0', () => {
   console.log(`\n🎮 Memorix Backend Server running on port ${PORT}`);
   console.log(`📍 Contract Address: ${contractAddress}`);
   console.log(`🌐 Network: ${config.blockchain.network}`);
   console.log(`⏰ Leaderboard resets daily at ${config.leaderboard.updateSchedule.dailyResetTime} UTC`);
   console.log(`\n✅ Server ready!\n`);
   
-  // Startup diagnostics
+  // Startup diagnostics...
   (async () => {
     try {
       console.log('🔎 Running startup blockchain diagnostics...');
@@ -865,9 +933,7 @@ app.listen(PORT, () => {
           } else {
             console.log('   Signer matches contract owner — on-chain admin calls should be authorized.');
           }
-        } catch (err) {
-          // ignore
-        }
+        } catch (err) {}
       }
 
       try {
@@ -882,20 +948,16 @@ app.listen(PORT, () => {
           const pool = await contract.leaderboardTotalPool();
           console.log(`   Contract leaderboardTotalPool (on-chain): ${ethers.utils.formatEther(pool)} ETH`);
         }
-      } catch (err) {
-        // not critical
-      }
-
+      } catch (err) {}
     } catch (err) {
       console.warn('Startup diagnostics failed:', err.message);
     }
 
-    // Start the payout schedule after diagnostics
     scheduleLeaderboardPayout();
   })();
 });
 
-// Global error handlers for better debugging
+
 process.on('unhandledRejection', (reason, promise) => {
   console.error('Unhandled Rejection at:', promise, 'reason:', reason);
 });

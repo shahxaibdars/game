@@ -1,5 +1,7 @@
 // Use localhost for local-only mode. Change to tunnel URL for remote access.
-const API_URL = 'http://localhost:3001/api';
+//const API_URL = 'http://localhost:3001/api';
+const API_URL = 'http://192.168.1.8:3001/api';
+
 const CONTRACT_ADDRESS = '0x5FbDB2315678afecb367f032d93F642f64180aa3';
 
 let web3Provider = null;
@@ -717,34 +719,6 @@ async function startEventListeners(primaryProvider) {
 // attach UI handlers
 elements.connectBtn.addEventListener('click', connectWallet);
 
-// Open the current page inside the MetaMask mobile app browser
-if (elements.openInMetaMaskBtn) {
-    elements.openInMetaMaskBtn.addEventListener('click', () => {
-        const currentUrl = window.location.href;
-
-        // Build the metamask.app.link universal link — remove protocol
-        // metamask.app.link expects host/path without https:// prefix
-        try {
-            const u = new URL(currentUrl);
-            // keep hostname + pathname + search
-            const target = `${u.hostname}${u.pathname}${u.search}`;
-
-            // If using a custom port other than 80/443, include it (e.g., 8000)
-            if (u.port) {
-                // hostname doesn't include port, so add it
-                // metamask.app.link supports including the port after the host
-                // e.g., metamask.app.link/dapp/example.com:8000/path
-                const hostWithPort = `${u.hostname}:${u.port}`;
-                window.location.href = `https://metamask.app.link/dapp/${hostWithPort}${u.pathname}${u.search}`;
-            } else {
-                window.location.href = `https://metamask.app.link/dapp/${target}`;
-            }
-        } catch (err) {
-            // fallback: try simple redirect
-            window.location.href = `https://metamask.app.link/dapp/${window.location.host}${window.location.pathname}${window.location.search}`;
-        }
-    });
-}
 
 elements.startBtn.addEventListener('click', startGame);
 elements.withdrawBtn.addEventListener('click', withdrawRewards);
