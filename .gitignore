@@ -1,3 +1,4 @@
+# Node modules and environment files
 node_modules
 .env
 
@@ -9,21 +10,13 @@ node_modules
 /typechain
 /typechain-types
 
-# solidity-coverage files
+# Solidity coverage files
 /coverage
 /coverage.json
 
-node_modules
-.env
+# Data files (local logs or training data)
+data/raw_rounds.jsonl
+data/round_features.csv
 
-# Hardhat files
-/cache
-/artifacts
-
-# TypeChain files
-/typechain
-/typechain-types
-
-# solidity-coverage files
-/coverage
-/coverage.json
+# Deployment info (local only)
+deployment-info.json

@@ -30,7 +30,8 @@ npx hardhat --config ./hardhat.config.js run scripts/deploy.js --network localho
 node server.js
 
 # 4. Terminal 3 - Start frontend
-cd public && python3 -m http.server 8000 --bind 0.0.0.0
+cd public 
+python3 -m http.server 8000 --bind 0.0.0.0
 
 # 5. Open browser: http://localhost:8000
 ```
