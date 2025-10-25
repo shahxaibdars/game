@@ -85,6 +85,8 @@ class TelemetryLogger {
     const headerFields = [
       'schema_version','round_id','player_address_hash','timestamp','round_type','grid_size','steps','correct_steps',
       'time_elapsed_ms','time_limit_ms','is_perfect','time_expired',
+      //session_id
+      'session_id',
       // reaction time stats
       'mean_reaction_time','std_reaction_time','min_reaction_time','max_reaction_time','entropy_reaction_time',
       // inter-click
@@ -211,8 +213,6 @@ class TelemetryLogger {
       // - if pointerType present (pointerType / type) use that
       // - fallback to 'unknown'
 
-      //console.log(click.clickType);
-
       if (click.clickType && typeof click.clickType === 'string') {
         click.clickType = click.clickType;
       } else if (click.pointerType && typeof click.pointerType === 'string') {
@@ -222,8 +222,7 @@ class TelemetryLogger {
       } else if (click.isTrusted === false) {
         click.clickType = 'synthetic';
       } else {
-        //click.clickType = 'unknown';
-        click.clickType = 'mouse';
+        click.clickType = 'unknown';
       }
 
       // Reaction time baseline: previous click or telemetry.turnStartTs
@@ -292,8 +291,7 @@ class TelemetryLogger {
       firstClickReactionTime: clicks.length ? clicks[1].reactionTime : 0,
       clickHesitationCount: reactionTimes.reduce((s,rt)=> s + (rt > 500 ? 1 : 0), 0),
       speedToAccuracyRatio: 0, // optionally compute
-      //dominantClickType: dominant
-      dominantClickType: "mouse"
+      dominantClickType: dominant
     };
   }
 
@@ -441,6 +439,8 @@ class TelemetryLogger {
       timeLimitMs || 0,
       isPerfect ? 1 : 0,
       timeExpired ? 1 : 0,
+      //session_id
+      `"${sessionFeatures.sessionId || 'unknown'}"`,  // <-- Add this line
       // reaction times
       (clickFeatures.meanReactionTime || 0).toFixed(3),
       (clickFeatures.stdReactionTime || 0).toFixed(3),

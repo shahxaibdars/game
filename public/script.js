@@ -312,24 +312,49 @@ function handleCellClick(index, event) {
 
     const cell = elements.grid.querySelectorAll('.cell')[index];
     const clickTime = Date.now();
-    
-    // Get click coordinates
-    const rect = cell.getBoundingClientRect();
-    const clickX = rect.left + rect.width / 2;  // Center of cell
-    const clickY = rect.top + rect.height / 2;
 
-    // Record click with telemetry tracker
-    if (window.TelemetryTracker) {
-        window.TelemetryTracker.recordClick(index, cell, event);
+    // Determine click type
+    let clickType = 'unknown';
+
+    if (event.pointerType) {
+        // Pointer Events API (covers mouse, pen, touch)
+        clickType = event.pointerType; // "mouse" | "touch" | "pen"
+    } else if (event.type === 'click' || event.type === 'mousedown') {
+        clickType = 'mouse';
+    } else if (event.type === 'touchstart' || event.type === 'touchend') {
+        clickType = 'touch';
+    } else if (event.type.startsWith('key')) {
+        clickType = 'keyboard';
+    } else if (event.isTrusted === false) {
+        clickType = 'synthetic'; // programmatically generated event
     }
 
+    // Get click coordinates (center of the clicked cell)
+    const rect = cell.getBoundingClientRect();
+    const clickX = rect.left + rect.width / 2;
+    const clickY = rect.top + rect.height / 2;
+
+    // Record click in telemetry tracker if available
+    if (window.TelemetryTracker) {
+        window.TelemetryTracker.recordClick(index, cell, event , {
+            ...event,
+            clickType,
+            xPx: clickX,
+            yPx: clickY,
+            clientTs: clickTime
+        });
+    }
+
+    // Log to game state telemetry (for raw data collection)
     gameState.telemetry.clicks.push({
-        index: index,
+        index,
         clientTs: clickTime,
+        clickType,
         xPx: clickX,
         yPx: clickY
     });
 
+    // Game logic
     gameState.userClicks.push(index);
     const expectedIndex = gameState.sequence[gameState.currentStep];
 
@@ -347,6 +372,7 @@ function handleCellClick(index, event) {
         finishRound(false);
     }
 }
+
 
 
 async function finishRound(timeExpired = false) {
