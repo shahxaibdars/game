@@ -33,6 +33,7 @@ let gameState = {
 
 const elements = {
     connectBtn: document.getElementById('connectBtn'),
+    openInMetaMaskBtn: document.getElementById('openInMetaMaskBtn'),
     walletDisplay: document.getElementById('walletDisplay'),
     grid: document.getElementById('grid'),
     startBtn: document.getElementById('startBtn'),
