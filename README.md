@@ -20,6 +20,9 @@ npm install
 
 # 2. Terminal 1 - Start local blockchain
 npx hardhat --config ./hardhat.config.js node
+or
+npx hardhat --config ./hardhat.config.js node --hostname 0.0.0.0
+
 
 # 3. Terminal 2 - Compile & deploy contracts, then start backend
 npx hardhat --config ./hardhat.config.js compile
@@ -27,7 +30,7 @@ npx hardhat --config ./hardhat.config.js run scripts/deploy.js --network localho
 node server.js
 
 # 4. Terminal 3 - Start frontend
-cd public && python3 -m http.server 8000
+cd public && python3 -m http.server 8000 --bind 0.0.0.0
 
 # 5. Open browser: http://localhost:8000
 ```
