@@ -1,6 +1,6 @@
 // Use localhost for local-only mode. Change to tunnel URL for remote access.
 //const API_URL = 'http://localhost:3001/api';
-const API_URL = 'http://192.168.1.8:3001/api';
+const API_URL = 'http://192.168.100.50:3001/api';
 
 const CONTRACT_ADDRESS = '0x5FbDB2315678afecb367f032d93F642f64180aa3';
 
