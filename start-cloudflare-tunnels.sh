@@ -96,21 +96,25 @@ echo "⚙️  UPDATING CONFIGURATION..."
 echo "======================================"
 echo ""
 
-# Update index.html with new URLs
-INDEX_FILE="$HOME/Desktop/fyp/F25_115_R_ProofPlay/MEMORIX--Web3-Memory-Challenge/public/index.html"
+# Update script.js with new URLs
+SCRIPT_FILE="./public/script.js"
 
-# Backup original
-cp "$INDEX_FILE" "$INDEX_FILE.backup"
+if [ -f "$SCRIPT_FILE" ]; then
+    # Backup original
+    cp "$SCRIPT_FILE" "$SCRIPT_FILE.backup"
 
-# Update API_URL
-sed -i "s|const API_URL = '.*';|const API_URL = '$BACKEND_URL/api';|" "$INDEX_FILE"
+    # Update API_URL
+    sed -i "s|const API_URL = '.*';|const API_URL = '$BACKEND_URL/api';|" "$SCRIPT_FILE"
 
-# Update blockchain RPC
-sed -i "s|new ethers.providers.JsonRpcProvider('http[s]*://[^']*')|new ethers.providers.JsonRpcProvider('$BLOCKCHAIN_URL')|g" "$INDEX_FILE"
+    # Update blockchain RPC
+    sed -i "s|new ethers.providers.JsonRpcProvider('http[s]*://[^']*')|new ethers.providers.JsonRpcProvider('$BLOCKCHAIN_URL')|g" "$SCRIPT_FILE"
 
-echo "✅ Configuration updated automatically!"
-echo ""
-echo "   Backup saved: public/index.html.backup"
+    echo "✅ Configuration updated automatically!"
+    echo ""
+    echo "   Backup saved: public/script.js.backup"
+else
+    echo "⚠️  Could not find script.js at: $SCRIPT_FILE"
+fi
 echo ""
 echo "======================================"
 echo "📤 SHARE WITH FRIENDS:"
@@ -137,10 +141,7 @@ echo "💾 DATA COLLECTION:"
 echo "======================================"
 echo ""
 echo "All gameplay data saves to:"
-echo "~/Desktop/fyp/F25_115_R_ProofPlay/MEMORIX--Web3-Memory-Challenge/dataset.csv"
-echo ""
-echo "Monitor it with:"
-echo "  watch -n 5 'wc -l dataset.csv'"
+echo "./data/"
 echo ""
 echo "======================================"
 echo ""
