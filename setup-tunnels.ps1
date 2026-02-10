@@ -1,6 +1,9 @@
 # MEMORIX - Cloudflare Tunnel Setup (Free & Stable!)
 # Windows PowerShell Version
 
+# Refresh PATH to include newly installed programs
+$env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")
+
 Write-Host "======================================" -ForegroundColor Cyan
 Write-Host "MEMORIX - Cloudflare Tunnel Setup" -ForegroundColor Cyan
 Write-Host "======================================" -ForegroundColor Cyan
@@ -124,15 +127,15 @@ Write-Host "UPDATING CONFIGURATION..." -ForegroundColor Yellow
 Write-Host "======================================" -ForegroundColor Cyan
 Write-Host ""
 
-# Update index.html with new URLs
-$indexFile = "$env:USERPROFILE\Desktop\fyp\F25_115_R_ProofPlay\MEMORIX--Web3-Memory-Challenge\public\index.html"
+# Update script.js with new URLs
+$scriptFile = ".\public\script.js"
 
-if (Test-Path $indexFile) {
+if (Test-Path $scriptFile) {
     # Backup original
-    Copy-Item $indexFile "$indexFile.backup" -Force
+    Copy-Item $scriptFile "$scriptFile.backup" -Force
     
     # Read content
-    $content = Get-Content $indexFile -Raw
+    $content = Get-Content $scriptFile -Raw
     
     # Update API_URL
     $content = $content -replace "const API_URL = '[^']*';", "const API_URL = '$backendUrl/api';"
@@ -141,14 +144,14 @@ if (Test-Path $indexFile) {
     $content = $content -replace "new ethers\.providers\.JsonRpcProvider\('https?://[^']*'\)", "new ethers.providers.JsonRpcProvider('$blockchainUrl')"
     
     # Save
-    $content | Set-Content $indexFile -NoNewline
+    $content | Set-Content $scriptFile -NoNewline
     
     Write-Host "SUCCESS: Configuration updated automatically!" -ForegroundColor Green
     Write-Host ""
-    Write-Host "   Backup saved: public\index.html.backup" -ForegroundColor Gray
+    Write-Host "   Backup saved: public\script.js.backup" -ForegroundColor Gray
 } else {
-    Write-Host "WARNING: Could not find index.html at:" -ForegroundColor Yellow
-    Write-Host "   $indexFile" -ForegroundColor Gray
+    Write-Host "WARNING: Could not find script.js at:" -ForegroundColor Yellow
+    Write-Host "   $scriptFile" -ForegroundColor Gray
 }
 
 Write-Host ""
@@ -177,7 +180,7 @@ Write-Host "DATA COLLECTION:" -ForegroundColor Cyan
 Write-Host "======================================" -ForegroundColor Cyan
 Write-Host ""
 Write-Host "All gameplay data saves to:" -ForegroundColor Yellow
-Write-Host "$env:USERPROFILE\Desktop\fyp\F25_115_R_ProofPlay\MEMORIX--Web3-Memory-Challenge\dataset.csv" -ForegroundColor White
+Write-Host ".\data\" -ForegroundColor White
 Write-Host ""
 Write-Host "======================================" -ForegroundColor Cyan
 Write-Host ""

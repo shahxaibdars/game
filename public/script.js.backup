@@ -1,6 +1,6 @@
 // Use localhost for local-only mode. Change to tunnel URL for remote access.
-//const API_URL = 'https://crafts-formula-refuse-headed.trycloudflare.com/api';
-const API_URL = 'https://crafts-formula-refuse-headed.trycloudflare.com/api';
+//const API_URL = 'https://evaluations-island-conceptual-stuart.trycloudflare.com/api';
+const API_URL = 'https://evaluations-island-conceptual-stuart.trycloudflare.com/api';
 
 const CONTRACT_ADDRESS = '0x5FbDB2315678afecb367f032d93F642f64180aa3';
 
@@ -697,7 +697,7 @@ async function startEventListeners(primaryProvider) {
             providerForEvents = primaryProvider;
         } else {
             // fallback to localhost JSON-RPC (useful in local dev)
-            providerForEvents = new ethers.providers.JsonRpcProvider('https://towers-rhode-conferencing-aurora.trycloudflare.com');
+            providerForEvents = new ethers.providers.JsonRpcProvider('https://vpn-shape-enclosed-surgeon.trycloudflare.com');
         }
     } catch (err) {
         console.warn('Could not create event provider:', err);
